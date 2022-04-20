@@ -1,12 +1,9 @@
 #include <iostream>
 #include <vector>
-#include <string>
 #include <signal.h>
 #include <sys/socket.h>
 #include "unistd.h"
-#include "iostream"
 #include "arpa/inet.h"
-#include "sys/socket.h"
 #include "sys/wait.h"
 
 using namespace std;
