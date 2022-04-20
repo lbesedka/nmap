@@ -5,6 +5,7 @@
 #include "unistd.h"
 #include "arpa/inet.h"
 #include "sys/wait.h"
+#include "iostream"
 
 using namespace std;
 
@@ -101,7 +102,6 @@ int main() {
     bind(fd, (sockaddr*)&address, sizeof(sockaddr_in));
     listen(fd_list,1);
     int result = connect(fd_list, (sockaddr*)&addr, sizeof(sockaddr_in));
-
     if (result)
         std::cout << "Port "<< 0 << " is open" << std::endl;
     setuid(getuid());
