@@ -1,13 +1,45 @@
 #include <iostream>
 #include "arpa/inet.h"
 #include "TCP.h"
+#include <cstring>
 //#include "TCP.cpp"
 
-int main() {
+int main(int argc, char **argv) {
     sockaddr_in addr{};
-    //sockaddr_in address{};
     std::string s;
-    //int fd;
+
+    switch(argc){
+        case 2:
+            s = argv[1];
+            addr.sin_addr.s_addr = inet_addr (s.c_str());
+            if (addr.sin_addr.s_addr != INADDR_NONE)
+                break;
+        case 1:
+            do{
+                std::cout << "Enter your IP-address: " << std::endl;
+                std::cin >> s;
+                addr.sin_addr.s_addr = inet_addr (s.c_str());
+            }while (addr.sin_addr.s_addr == INADDR_NONE);
+            break;
+
+    }
+    if (argc > 2)
+        return 1;
+    else {
+        if (argc == 2) {
+            s = argv[1];
+            addr.sin_addr.s_addr = inet_addr(s.c_str());
+        }
+        do {
+            if (addr.sin_addr.s_addr != INADDR_NONE)
+                break;
+            std::cout << "Enter your IP-address: " << std::endl;
+            std::cin >> s;
+            addr.sin_addr.s_addr = inet_addr(s.c_str());
+        } while (true);
+    }
+
+
 
     do{
         std::cout << "Enter your IP-address: " << std::endl;
