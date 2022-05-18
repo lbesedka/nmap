@@ -4,11 +4,11 @@
 #include <cstring>
 //#include "TCP.cpp"
 
-int main(int argc, char **argv) {
+int main(int argc, char *argv[]) {
     sockaddr_in addr{};
-    std::string s;
+    std::string s = "";
 
-    switch(argc){
+    /*switch(argc){
         case 2:
             s = argv[1];
             addr.sin_addr.s_addr = inet_addr (s.c_str());
@@ -21,8 +21,8 @@ int main(int argc, char **argv) {
                 addr.sin_addr.s_addr = inet_addr (s.c_str());
             }while (addr.sin_addr.s_addr == INADDR_NONE);
             break;
+    }*/
 
-    }
     if (argc > 2)
         return 1;
     else {
@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
             addr.sin_addr.s_addr = inet_addr(s.c_str());
         }
         do {
-            if (addr.sin_addr.s_addr != INADDR_NONE)
+            if ((addr.sin_addr.s_addr != INADDR_NONE) && (s.length() > 0))
                 break;
             std::cout << "Enter your IP-address: " << std::endl;
             std::cin >> s;
@@ -41,11 +41,11 @@ int main(int argc, char **argv) {
 
 
 
-    do{
+    /*do{
         std::cout << "Enter your IP-address: " << std::endl;
         std::cin >> s;
         addr.sin_addr.s_addr = inet_addr (s.c_str());
-    }while (addr.sin_addr.s_addr == INADDR_NONE);
+    }while (addr.sin_addr.s_addr == INADDR_NONE);*/
 
     TCPscannerSpace::TCPscanner scanner(s);
     scanner.scanPorts();
