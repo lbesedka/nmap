@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 #include <fstream>
 #include <algorithm>
@@ -6,9 +8,36 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-using namespace std;
+//using namespace std;
 
-bool port_is_open(const std::string &domain, const std::string &port){
+namespace TCPscannerSpace {
+    class TCPscanner {
+    private:
+        sockaddr_in addr{};
+
+        //bool isNumber(const std::string &str);
+
+        //std::vector<std::string> split(const std::string &str, char delim);
+
+        //bool validateIP(std::string ip);
+
+        void process2_main(const sockaddr_in &addr);
+
+        bool try_connect(const sockaddr_in &addr);
+
+    public:
+        TCPscanner(std::string s){
+            addr.sin_addr.s_addr = inet_addr(s.c_str());
+            addr.sin_family = AF_INET;
+            addr.sin_port = htons(0);
+        }
+
+        void scanPorts();
+    };
+}
+
+
+/*bool port_is_open(const std::string &domain, const std::string &port){
 
     addrinfo *result;                       // addrinfo structure to proper connection
     addrinfo hints{};                       // addrinfo structure with the type of service requested
@@ -28,7 +57,7 @@ bool port_is_open(const std::string &domain, const std::string &port){
         int handle = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol); //specific socket for this connection
 
         if (handle != -1 && connect(handle, addr->ai_addr, addr->ai_addrlen) == 0) {
-            conne-ction = true;
+            connection = true;
             switch(addr->ai_family) {
                 case AF_INET: //IPV4
                     retval = inet_ntop(addr->ai_family, &(reinterpret_cast<sockaddr_in *>(addr->ai_addr)->sin_addr), addressString, INET6_ADDRSTRLEN);
@@ -48,22 +77,22 @@ bool port_is_open(const std::string &domain, const std::string &port){
     return retval==nullptr ? true : false;
 }
 //nmap <ip>
-void check_from_1_to_1000(string domain){
+void check_from_1_to_1000(std::string domain){
 
     for(int port=1 ; port < 1000 ; port++)
-        if(port_is_open(domain, to_string(port)) == 0)
+        if(port_is_open(domain, std::to_string(port)) == 0)
             printf("Port %d: Open\n", port);
 }
 
 //nmap -p- <ip>
-void check_from_1_to_65535(string domain){
+void check_from_1_to_65535(std::string domain){
 
     for(int port=0 ; port < 65535 ; port++)
-        if(port_is_open(domain, to_string(port)) == 0)
+        if(port_is_open(domain, std::to_string(port)) == 0)
             printf("Port %d: Open\n", port);
-}
+}*/
 
-int main(int argc, char *argv[])
+/*int main(int argc, char *argv[])
 {
     if (argc < 2 || argc > 3)
     {
@@ -90,4 +119,4 @@ int main(int argc, char *argv[])
         check_from_1_to_1000(IP);
 
     return 0;
-}
+}*/
