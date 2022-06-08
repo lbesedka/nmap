@@ -140,6 +140,7 @@ string UDPscanner::get_source_ip(sockaddr_in &source)
     freeifaddrs(interface_addr);
 
     //Populate source. c_str to convert to c style pointer
+    //Populate source. c_str to convert to c style pointer
     if(inet_aton(ipv4_string.c_str(), &source.sin_addr) == 0)
     {
         perror("\n inet_aton function call failed \n");
@@ -181,7 +182,7 @@ void UDPscanner::try_scan(const char* dest , unsigned int d_port)
     struct dns_header *dns = {nullptr};
     struct question *qinfo = NULL;
     dns = (struct dns_header *)&dns_buffer[sizeof(struct ip) + sizeof(struct udphdr)];
-    unsigned char dns_host[] = "www.facebook.com";
+    unsigned char dns_host[] = "pdd.yandex.ru";
 
 
     dns->id = (unsigned short) htons(getpid());
@@ -233,7 +234,7 @@ void UDPscanner::try_scan(const char* dest , unsigned int d_port)
     memcpy(&destination, (sockaddr_in *) list_pointer->ai_addr, list_pointer->ai_addrlen);
 
     destination.sin_port = htons(d_port);
-    source_host = get_source_ip(source);
+    source_host = "127.0.0.1";
 
     // cout<<"Source is :"<<source_host<<endl;
 
@@ -318,7 +319,6 @@ void UDPscanner::try_scan(const char* dest , unsigned int d_port)
         }
 
         ssize_t data_read ;
-        //data_read = MultiThread::polling_read(read_sock, 0, (sockaddr *)&destination, sizeof(destination), read_buffer, sizeof(read_buffer),500);
         sleep(2);
 
         ssize_t received_bytes=recv(read_sock, read_buffer , sizeof(read_buffer), 0);
@@ -338,26 +338,26 @@ void UDPscanner::try_scan(const char* dest , unsigned int d_port)
     while(t<5);
 
     iphdr* read_iphdr = (iphdr*) read_buffer;
-
+    int result = 2;
     if ( read_iphdr->protocol==IPPROTO_ICMP )
     {
         /* Got ICMP desitnation unreachable response */
 
         icmphdr* read_icmphdr = (icmphdr*)(read_buffer + (int)read_iphdr->ihl*4);
         /* Check if type matches */
-
         if((read_icmphdr->type == ICMP_UNREACH) && (read_icmphdr->code == ICMP_UNREACH_PORT))
         {
+            result = true;
             status_report->protocol = IPPROTO_UDP;
             status_report->status = "CLOSED";
 
         }
+        exit(result);
 
     }
-    int result = false;
     if ( read_iphdr->protocol==IPPROTO_UDP)
     {
-        result = true;
+        result = false;
         cout<<"Got a udp packet "<<endl;
     }
     close(write_sock);
@@ -393,6 +393,13 @@ void UDPscanner::scanPorts() {
     std::cout << geteuid() << std::endl;
     for (int i = 2; i < 65535; ++i) {
         addr.sin_port = htons(i);
-        try_scan("127.0.0.1", i);
+        bool res = try_connect(addr, i);
+        if (res) {
+            std::cout << "UDP Port " << i << " is closed" << std::endl;
+        }
+        else if (!res)
+        {
+            std::cout << "UDP port " << i << " is (probably) open" << std::endl;
+        }
     }
 }
