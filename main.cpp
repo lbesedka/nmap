@@ -3,6 +3,10 @@
 #include "TCP.h"
 #include <cstring>
 #include "UDP.h"
+#include "netdb.h"
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netinet/ip.h>
 //#include "TCP.cpp"
 
 int main(int argc, char *argv[]) {
@@ -23,7 +27,7 @@ int main(int argc, char *argv[]) {
             }while (addr.sin_addr.s_addr == INADDR_NONE);
             break;
     }*/
-
+    hostent* he;
     if (argc > 2)
         return 1;
     else {
@@ -37,6 +41,7 @@ int main(int argc, char *argv[]) {
             std::cout << "Enter your IP-address: " << std::endl;
             std::cin >> s;
             addr.sin_addr.s_addr = inet_addr(s.c_str());
+            he = gethostbyname(s.c_str());
         } while (true);
     }
 
@@ -51,7 +56,7 @@ int main(int argc, char *argv[]) {
     //TCPscannerSpace::TCPscanner scanner(s);
     //scanner.scanPorts();
     UDPscannerSpace::UDPscanner scannerU(s);
-    scannerU.scanPorts();
+    scannerU.scanPorts(he);
 
     /*std::cout << geteuid() << std::endl;
 
