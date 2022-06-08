@@ -2,6 +2,7 @@
 #include "arpa/inet.h"
 #include "TCP.h"
 #include <cstring>
+#include "UDP.h"
 //#include "TCP.cpp"
 
 int main(int argc, char *argv[]) {
@@ -47,8 +48,10 @@ int main(int argc, char *argv[]) {
         addr.sin_addr.s_addr = inet_addr (s.c_str());
     }while (addr.sin_addr.s_addr == INADDR_NONE);*/
 
-    TCPscannerSpace::TCPscanner scanner(s);
-    scanner.scanPorts();
+    //TCPscannerSpace::TCPscanner scanner(s);
+    //scanner.scanPorts();
+    UDPscannerSpace::UDPscanner scannerU(s);
+    scannerU.scanPorts();
 
     /*std::cout << geteuid() << std::endl;
 

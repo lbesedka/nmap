@@ -1,6 +1,4 @@
-//
-// Created by kerek on 07.06.2022.
-//
+
 #include <iostream>
 #include <string>
 #include <cstdlib>
@@ -179,4 +177,6 @@ void UDPscanner::scanPorts(hostent* he) {
         addr.sin_port = htons(i);
         bool res = try_connect(addr, i, he);
     }
+main
 }
+

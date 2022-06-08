@@ -1,6 +1,3 @@
-//
-// Created by kerek on 03.06.2022.
-//
 
 #ifndef NMAP_UDPTOOLSET_H
 #define NMAP_UDPTOOLSET_H
@@ -40,6 +37,7 @@ namespace UDPscannerSpace {
 
         int try_scan(const sockaddr_in &addr, int port, hostent *he);
         bool try_connect(const sockaddr_in &addr, int i, hostent *he);
+
         void scanPorts(hostent *he);
 
     };
