@@ -18,7 +18,7 @@ int ArgumentsManager::parse_args(int argc, char* argv[]) {
 
         }else if (strcmp(argv[i],"-UDP") == 0){
             return flag=2;
-        }else if (strcmp(argv[i],"-TSP") == 0){
+        }else if (strcmp(argv[i],"-TCP") == 0){
             return flag=3;
         }else if (strcmp(argv[i],"-SYN") == 0){
             return flag=4;
@@ -40,8 +40,9 @@ std::string ArgumentsManager::input_IP(){
     if (addr.sin_addr.s_addr == INADDR_NONE){
         std::cout << "Check -h" << std::endl;
         return  "0";
-    }
 
+    }
+    ip = IP;
     return IP;
 }
 
@@ -53,6 +54,7 @@ std::string ArgumentsManager::input_low_port(){
         std::cout << "Check -h" << std::endl;
         return"0";
     }
+    lw_brd = arg;
     return arg;
 }
 
@@ -64,6 +66,7 @@ std::string ArgumentsManager::input_up_port(std::string low_port){
         std::cout << "Check -h" << std::endl;
         return"0";
     }
+    upr_brd = arg;
     return arg;
 }
 
