@@ -9,9 +9,10 @@
 
 class ArgumentsManager{
 private:
-    std::string ip;
 public:
+    std::string ip = "";
     int flag;
+    std::string lw_brd, upr_brd;
     ArgumentsManager(int argc, char* argv[]);
     int parse_args(int argc, char* argv[]);
     std::string input_low_port();

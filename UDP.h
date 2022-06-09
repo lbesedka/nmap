@@ -14,6 +14,7 @@
 #include <netinet/tcp.h>
 #include <netinet/ip.h>
 #include <netinet/ip_icmp.h>
+#include "ArgumentsManager.h"
 
 //using namespace std;
 
@@ -21,12 +22,6 @@ namespace UDPscannerSpace {
     class UDPscanner {
     private:
         sockaddr_in addr{};
-
-        //bool isNumber(const std::string &str);
-
-        //std::vector<std::string> split(const std::string &str, char delim);
-
-        //bool validateIP(std::string ip);
 
     public:
         UDPscanner(std::string s){
@@ -38,7 +33,7 @@ namespace UDPscannerSpace {
         int try_scan(const sockaddr_in &addr, int port, hostent *he);
         bool try_connect(const sockaddr_in &addr, int i, hostent *he);
 
-        void scanPorts(hostent *he);
+        void scanPorts(hostent *he, ArgumentsManager a);
 
     };
 }

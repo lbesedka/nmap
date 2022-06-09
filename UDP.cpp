@@ -8,60 +8,14 @@
 #include <cstring>
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <netinet/ip.h>
 #include <stdio.h>
 #include <poll.h>
 #include <pthread.h>
 #include "UDP.h"
-#include "DNS.h"
-sockaddr_in server_socket_addr;
+#include "ArgumentsManager.h"
 
 
 using namespace UDPscannerSpace;
-/*
-int UDPscanner::try_scan(const sockaddr_in &addr,int port)
-{
-    int wrfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    if (wrfd < 0)
-    {
-        perror("Failed to open send socket");
-        exit(-1);
-    }
-    fd_set sockets;
-    FD_SET (wrfd, &sockets);
-    socklen_t socklen = sizeof(server_socket_addr);
-    std::string sendString = "scanning";
-    if (sendto(wrfd, sendString.c_str(), sendString.size() + 1, 0, (sockaddr *)&addr, socklen) < 0)
-    {
-        std::cout << "send in port scanner failed" << std::endl;
-    }
-    int responseSize = 1024;
-    char response[responseSize];
-    memset(response, 0, responseSize); // zero initialize char array
-
-    struct timeval timeout{};
-    timeout.tv_sec = 0;
-    timeout.tv_usec = 500000;
-    if (select(wrfd + 1, &sockets, NULL, NULL, &timeout) > 0) {
-        int byteCount = recvfrom(wrfd, response, responseSize, 0, (sockaddr *) &addr, &socklen);
-        if (byteCount < 0) {
-            std::cout << "error receiving output from server" << std::endl;
-            close(wrfd);
-            exit(-1);
-        } else {
-            response[byteCount] = '\0';
-            std::cout << "-----------------------" << std::endl;
-            std::cout << response << std::endl;
-            std::cout << "Byte count received: " << byteCount << ", "
-                      << "on port: " << port << std::endl;
-            std::cout << "-----------------------" << std::endl;
-            exit(0);
-        }
-        close(wrfd);
-    }
-    exit(-1);
-}
-*/
 
 bool rx_packet(int fd)
 {
@@ -133,7 +87,6 @@ int UDPscanner::try_scan(const sockaddr_in &addr,int port, hostent *he)
             {
                 close(sendfd);
                 close(recvfd);
-                std::cout << "Host: " << srvport->s_name << std::endl;
                 std::cout << "UDP Port " << port << " is (probably) open. Host: " << srvport->s_name << std::endl;
                 exit(0);
             }
@@ -171,12 +124,10 @@ bool UDPscanner::try_connect(const sockaddr_in &addr, int port, hostent *he) {
 }
 
 
-void UDPscanner::scanPorts(hostent* he) {
-    std::cout << geteuid() << std::endl;
-    for (int i = 1; i < 65535; ++i) {
+void UDPscanner::scanPorts(hostent* he, ArgumentsManager a) {
+    for (int i = stoi(a.lw_brd); i < stoi(a.upr_brd); ++i) {
         addr.sin_port = htons(i);
         bool res = try_connect(addr, i, he);
     }
-main
 }
 
