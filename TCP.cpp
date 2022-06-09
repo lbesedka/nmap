@@ -15,6 +15,10 @@ using namespace TCPscannerSpace;
 void TCPscanner::process2_main(const sockaddr_in &addr) {
     int fd = socket(AF_INET, SOCK_STREAM, 0);
     int result = connect(fd, (sockaddr *) &addr, sizeof(sockaddr_in));
+    if(result ==0) {
+        auto srvport = getservbyport(addr.sin_port, "tcp");
+        std::cout << "Host: " << srvport->s_name << std::endl;
+    }
     close(fd);
     exit(result);
 }

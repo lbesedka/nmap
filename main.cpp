@@ -2,7 +2,6 @@
 #include "TCP.h"
 #include "UDP.h"
 #include "netdb.h"
-#include "SYN.h"
 #include "ArgumentsManager.h"
 
 int main(int argc, char *argv[]) {
@@ -18,8 +17,6 @@ int main(int argc, char *argv[]) {
             break;
         case 3: //TCP
             scanner.scanPorts(a);
-            break;
-        case 4: //SYN
             break;
         default:
             break;

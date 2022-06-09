@@ -31,14 +31,14 @@ bool rx_packet(int fd)
         FD_ZERO(&fds);
         FD_SET(fd, &fds);
 
-        if(select(fd + 1, &fds, NULL, NULL, &poll) > 0)
+        if(select(fd + 1, &fds, NULL, NULL, &poll) > 0) //smotrim kogra deskriptor stanovitsya gotovim prinimat' soedinenie
         {
-            recvfrom(fd, &buf, sizeof(buf), 0x0, NULL, NULL);
+            recvfrom(fd, &buf, sizeof(buf), 0x0, NULL, NULL); //zhdem otvet ot hosta
         }
-        else if(!FD_ISSET(fd, &fds))
+        else if(!FD_ISSET(fd, &fds)) // esli otvet poluchen to vse kryto
             return 1;
         else
-            return 0;
+            return 0; //ne kryto
     }
 }
 

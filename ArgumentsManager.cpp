@@ -20,8 +20,6 @@ int ArgumentsManager::parse_args(int argc, char* argv[]) {
             return flag=2;
         }else if (strcmp(argv[i],"-TCP") == 0){
             return flag=3;
-        }else if (strcmp(argv[i],"-SYN") == 0){
-            return flag=4;
         }else{
             std::cout << "Error: wrong arguments\n";
             help();
@@ -75,6 +73,6 @@ void ArgumentsManager::help() {
                  "-ip: Example: -ip 127.0.0.1\n"
                  "-p: Example: -p {0<lower border<65535 and 0<upper border<65535 and lower border must be smaller than upper}\n"
                  "-UDP: UDP scan"
-                 "-TCP: TCP scan"
-                 "-SYN: Silent TCP scan";
+                 "-TCP: TCP scan";
+
 }
