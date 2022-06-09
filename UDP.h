@@ -1,3 +1,4 @@
+
 #ifndef NMAP_UDPTOOLSET_H
 #define NMAP_UDPTOOLSET_H
 #pragma once
@@ -34,8 +35,9 @@ namespace UDPscannerSpace {
             addr.sin_port = htons(0);
         }
 
-        int try_scan(const sockaddr_in &addr, int port, hostent he);
-        bool try_connect(const sockaddr_in &addr, int i, hostenthe);
+        int try_scan(const sockaddr_in &addr, int port, hostent *he);
+        bool try_connect(const sockaddr_in &addr, int i, hostent *he);
+
         void scanPorts(hostent *he);
 
     };
